@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import ReborneHome from "../assets/Images/Home1.png.jpg"
 import ReborneHome1 from  "../assets/Images/Home2.png.jpg"
 import CenterPage from "./CenterPage";
+import Products from "../data/Products";
 
 export default function Landingpage() {
   const [isLiked, setIsLiked] = useState(false);
@@ -80,6 +81,7 @@ export default function Landingpage() {
       <div>
         <CenterPage/>
       </div>
+       <Products/>
     </div>
 
   );
