@@ -35,9 +35,7 @@ export default function Footer() {
             <li>
               <Link to="/" className="hover:text-green-400 transition">About</Link>
             </li>
-            <li>
-              <Link to="/contact" className="hover:text-green-400 transition">Contact</Link>
-            </li>
+           
           </ul>
         </div>
 
@@ -46,11 +44,11 @@ export default function Footer() {
           <h3 className="text-lg font-semibold text-white mb-4">Outlets</h3>
           <p className="text-neutral-400 flex items-start gap-2 mb-3">
             <MapPin className="text-green-500 w-5 h-5 mt-1" />
-            Kozhikode – SM Street, Kerala 673001
+            Kozhikode – Near Beach, Kerala 673001
           </p>
           <p className="text-neutral-400 flex items-start gap-2">
             <MapPin className="text-green-500 w-5 h-5 mt-1" />
-            Feroke – Near Feroke College, Kerala 673631
+            Feroke – Near Feroke Stand, Kerala 673631
           </p>
         </div>
 
@@ -59,7 +57,7 @@ export default function Footer() {
           <h3 className="text-lg font-semibold text-white mb-4">Connect With Us</h3>
           <div className="flex gap-4 mb-4">
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/reborne_fashion_cafe/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-green-400 transition"

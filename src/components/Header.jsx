@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, UserRound, Menu, X } from "lucide-react";
@@ -49,7 +48,7 @@ export default function Header() {
   // 🔹 Nav links
   const navLinks = [
     { name: "Home", onClick: handleHomeClick },
-    { name: "Catalog", path: "/products" },
+    { name: "products", path: "/products" },
     { name: "About", onClick: handleAboutClick },
   ];
 
@@ -186,21 +185,29 @@ export default function Header() {
         </AnimatePresence>
       </div>
 
-      {/* 🔍 Search Overlay (Fixed size + responsive center) */}
+      {/* 🔍 Search Overlay (below header) */}
       <AnimatePresence>
         {isSearchOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[999]"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-[90px] left-0 right-0 bottom-0 bg-black/30 backdrop-blur-sm flex items-start justify-center z-40"
+            onClick={(e) => {
+              // Close if click outside
+              if (e.target === e.currentTarget) {
+                setIsSearchOpen(false);
+                setSearchTerm("");
+              }
+            }}
           >
             <motion.div
-              initial={{ scale: 0.9, y: -20 }}
+              initial={{ scale: 0.95, y: -10 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: -10 }}
+              exit={{ scale: 0.95, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-[480px] max-h-[80vh] p-6 relative overflow-hidden"
+              className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-[480px] max-h-[70vh] mt-6 p-6 relative overflow-hidden"
             >
               <button
                 className="absolute top-4 right-4 text-gray-500 hover:text-black"

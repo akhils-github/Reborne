@@ -26,7 +26,6 @@ export default function AllProductsPage() {
 
   return (
     <div className="relative min-h-screen bg-neutral-50 py-28 px-6 md:px-20 overflow-hidden">
-      {/* 🌈 Animated Heading */}
       <motion.h1
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
