@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import allProducts from "../data/allProducts";
 import { motion } from "framer-motion";
-import { ShoppingBag, Star, ArrowLeft } from "lucide-react";
+import { Star, ArrowLeft } from "lucide-react";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -134,7 +134,7 @@ export default function ProductPage() {
                 key={item.id}
                 whileHover={{ scale: 1.03 }}
                 className="bg-white border border-neutral-200 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-all"
-                onClick={() => navigate(`/product/${item.id}`)}
+                onClick={() => navigate(`/products/${item.id}`)} // ✅ FIXED HERE
               >
                 <img
                   src={item.image}
