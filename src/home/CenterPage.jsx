@@ -43,6 +43,8 @@ export default function CenterPage() {
           className="h-[90vh] w-[60vh] object-cover rounded-3xl shadow-2xl hover:scale-105 transition-all duration-500 md:ml-[4rem]"
         />
       </div>
+      
     </div>
+    
   );
 }

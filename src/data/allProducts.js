@@ -27,7 +27,7 @@ const allProducts = [
     brand: "Puma",
     category: "Sneakers",
     price: "$89.00",
-    image: "https://i.pinimg.com/1200x/85/9e/ec/859eec0cfa22dbcd63a07572d2e36823.jpg",
+    image: "https://res.cloudinary.com/dvuv1n7uz/image/upload/v1762443007/Cloud1_d11vmb.jpg",
     description:
       "A timeless icon reimagined — the Puma Suede Classic offers comfort and street-ready style.",
   },
