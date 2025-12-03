@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import products from "../data/Product";
+import { useQuery } from "@tanstack/react-query";
+import { basicRequest, PRODUCTS } from "@/api/api";
 
 export default function Products() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageLimit = 5;
+  const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
-
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["productListing", currentPage, pageLimit],
+    queryFn: () =>
+      basicRequest
+        .get(PRODUCTS, {
+          params: {
+            limit: pageLimit,
+            page: currentPage,
+          },
+        })
+        .then((res) => res?.data),
+    staleTime: 0,
+    cacheTime: 0,
+  });
+  console.log(data);
   return (
-    <div className="relative bg-gradient-to-b from-neutral-50 via-white to-neutral-100 min-h-screen py-24 px-4 md:px-16 overflow-hidden">
-      
+    <div className="relative bg-linear-to-b from-neutral-50 via-white to-neutral-100 min-h-screen py-24 px-4 md:px-16 overflow-hidden">
       {/* Animated Background Blur */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-tr from-gray-100 via-white to-gray-200 opacity-70 blur-3xl -z-10"
+        className="absolute inset-0 bg-linear-to-tr from-gray-100 via-white to-gray-200 opacity-70 blur-3xl -z-10"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -21,11 +39,11 @@ export default function Products() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative text-5xl md:text-6xl font-extrabold text-center mb-10 tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-black via-gray-700 to-gray-900"
+        className="relative text-5xl md:text-6xl font-extrabold text-center mb-10 tracking-tight leading-tight bg-clip-text text-transparent bg-linear-to-r from-black via-gray-700 to-gray-900"
       >
         Discover the Art of
         <br />
-        <span className="bg-gradient-to-r from-gray-900 via-neutral-800 to-black bg-clip-text text-transparent">
+        <span className="bg-linear-to-r from-gray-900 via-neutral-800 to-black bg-clip-text text-transparent">
           Modern Minimalism
         </span>
       </motion.h1>
@@ -36,7 +54,7 @@ export default function Products() {
         transition={{ duration: 1, delay: 0.3 }}
         className="text-neutral-600 text-center text-lg md:text-xl max-w-3xl mx-auto mb-16"
       >
-        Redefine comfort and confidence with our minimal streetwear collection — 
+        Redefine comfort and confidence with our minimal streetwear collection —
         where timeless design meets sustainable craftsmanship.
       </motion.p>
 
@@ -49,12 +67,12 @@ export default function Products() {
           View All Products
         </button>
       </div>
-
+      {console.log(data)}
       {/* Products Grid (optional preview) */}
       <div className="max-w-[1600px] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
-        {products.slice(0, 5).map((product, index) => (
+        {data?.products?.map((product, index) => (
           <motion.div
-            key={product.id || index}
+            key={product?.slug || index}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
@@ -67,18 +85,18 @@ export default function Products() {
           >
             <div className="overflow-hidden rounded-3xl bg-white shadow-sm hover:shadow-xl transition-all duration-500">
               <motion.img
-                src={product.image}
-                alt={product.name}
+                src={product?.images?.[0]?.url}
+                alt={product?.name}
                 className="w-full h-[340px] object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
               />
             </div>
 
             <div className="mt-4">
               <h2 className="text-base md:text-lg font-semibold text-gray-900 tracking-tight">
-                {product.name}
+                {product?.name}
               </h2>
-              <p className="text-gray-500 text-sm mt-1">{product.category}</p>
-              <p className="mt-2 text-gray-800 font-medium">{product.price}</p>
+              <p className="text-gray-500 text-sm mt-1">{product?.category}</p>
+              <p className="mt-2 text-gray-800 font-medium">{product?.price}</p>
             </div>
           </motion.div>
         ))}
