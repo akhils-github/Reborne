@@ -52,7 +52,7 @@ export const ProjectList = () => {
       },
       {
         header: "Category",
-        accessorKey: "category",
+        accessorKey: "category.name",
       },
       {
         header: "Price",

@@ -6,7 +6,6 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export const AdminLayout = () => {
   let token = localStorage.getItem("token");
-  console.log(token)
   return token ? (
     <div className="flex flex-col min-h-screen bg-neutral-50">
       <Header navLinks={adminNavLinks} />

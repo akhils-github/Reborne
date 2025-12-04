@@ -108,7 +108,7 @@ export default function ProductPage() {
               whileTap={{ scale: 0.95 }}
               className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-full font-medium hover:bg-green-700 transition-all text-sm sm:text-base"
             >
-              💬 WhatsApp
+            <img src="/assets/icon/whatsapp.svg" alt="whatsapp" className="size-8" /> WhatsApp
             </motion.a>
           </div>
 
@@ -158,7 +158,7 @@ export default function ProductPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
             {similarProducts?.products?.map((item) => (
               <motion.div
-                key={item?.slug}
+                key={item?._id}
                 whileHover={{ scale: 1.03 }}
                 className="bg-white border border-neutral-200 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-all"
                 onClick={() => navigate(`/products/${item._id}`)}
