@@ -144,7 +144,7 @@ export default function AllProductsPage() {
           >
             {/* Wrap whole card with Link */}
             <Link
-              to={`/products/${product?.id}`}
+              to={`/products/${product?._id}`}
               className="group relative bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 block"
             >
               {/* ❤️ Wishlist Icon */}
