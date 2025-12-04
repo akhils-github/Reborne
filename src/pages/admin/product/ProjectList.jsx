@@ -52,7 +52,7 @@ export const ProjectList = () => {
       },
       {
         header: "Category",
-        accessorKey: "category",
+        accessorKey: "category.name",
       },
       {
         header: "Price",
@@ -77,16 +77,12 @@ export const ProjectList = () => {
         cell: ({ row }) => {
           return (
             <div className="flex gap-2">
-              <div
-                onClick={() => {
-                  setCreatePopupOpen(true);
-                  setSlug(row?.original);
-                }}
-                // to={`/employer/cv-folder/edit/${row?.original?.id}`}
+              <Link
+                to={`/admin/product/edit/${row?.original?._id}`}
                 className="flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-[#F5F5F5] px-2 text-[#2C2C2C] transition-all duration-500 hover:scale-[1.05] hover:shadow"
               >
                 <Pencil className="text-[#2C2C2C]" />
-              </div>
+              </Link>
               <div
                 onClick={() => {
                   setSlug(row?.original?.id);

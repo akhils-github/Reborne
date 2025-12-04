@@ -1,0 +1,139 @@
+import { CATEGORY, newRequest, PRODUCTS } from "@/api/api";
+import NoData from "@/components/NoData";
+import CreateCategory from "@/components/popup/category/CreateCategory";
+import Pagination from "@/components/table/Pagination";
+import QueryTable from "@/components/table/QueryTable";
+import { useQuery } from "@tanstack/react-query";
+import { Pencil, Plus, Trash2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+export const CategoryList = () => {
+  const [openCategoryPopup, setOpenCategoryPopup] = useState(false);
+  const [slug, setSlug] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+  const pageLimit = 10;
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["categoryListing", currentPage, pageLimit],
+    queryFn: () =>
+      newRequest
+        .get(CATEGORY, {
+          params: {
+            limit: pageLimit,
+            page: currentPage,
+          },
+        })
+        .then((res) => res?.data),
+    staleTime: 0,
+    cacheTime: 0,
+  });
+  useEffect(() => {
+    setTotalPages(data?.pages);
+  }, [data?.pages]);
+  const list = React.useMemo(() => data?.data, [data]);
+  const columns = React.useMemo(
+    () => [
+      {
+        header: "Sl no",
+        accessorKey: "id",
+        cell: ({ row }) =>
+          currentPage * pageLimit - (pageLimit - (parseInt(row?.id) + 1)),
+      },
+      {
+        header: "Name",
+        accessorKey: "name",
+      },
+      {
+        header: "Description",
+        accessorKey: "description",
+      },
+      {
+        header: "Slug",
+        accessorKey: "slug",
+      },
+
+      {
+        header: "Action",
+        accessorKey: "action",
+        cell: ({ row }) => {
+          return (
+            <div className="flex gap-2">
+              <div
+                onClick={() => {
+                  setSlug(row?.original);
+                  setOpenCategoryPopup(true);
+                }}
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-[#F5F5F5] px-2 text-[#2C2C2C] transition-all duration-500 hover:scale-[1.05] hover:shadow"
+              >
+                <Pencil className="text-[#2C2C2C]" />
+              </div>
+              <div
+                onClick={() => {
+                  setSlug(row?.original?.id);
+                  setPopupOpen(true);
+                }}
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-[#F5F5F5] px-2 transition-all duration-500 hover:scale-[1.05] hover:shadow"
+              >
+                <Trash2 className="text-[#B80909]/80" />
+              </div>
+            </div>
+          );
+        },
+      },
+    ],
+    [currentPage]
+  );
+  return (
+    <>
+      {" "}
+      <CreateCategory
+        popupOpen={openCategoryPopup}
+        setPopupOpen={setOpenCategoryPopup}
+        setSlug={setSlug}
+        slug={slug}
+      />
+      <div className="flex overflow-y-scroll pb-10 overflow-y-min flex-col gap-2 px-20">
+        <div className="text-zinc-800   flex items-center justify-between gap-3 border-b py-4  px-7 border-b-gray-200 text-base font-semibold">
+          <div className="flex gap-4 text-zinc-400">
+            <h3 className="text-zinc-800">Category</h3>
+          </div>
+          <div
+            onClick={() => {
+              setOpenCategoryPopup(true);
+            }}
+            className="flex cursor-pointer bg-[#2E2E2E] text-sm gap-2 font-normal h-10 w-28 justify-center items-center text-white rounded-[5px]"
+          >
+            <Plus className="size-4" />
+            Create
+          </div>
+        </div>
+        {isLoading ? (
+          <div className="flex mt-28 items-center justify-center w-full h-full">
+            <div className="relative h-10 w-10">
+              <img
+                src="/loader/load.gif"
+                className="object-contain h-full w-full"
+              />
+            </div>
+          </div>
+        ) : (
+          <>
+            {!list?.length ? (
+              <NoData />
+            ) : (
+              <>
+                <QueryTable list={list} columns={columns} />
+                <Pagination
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  totalPages={totalPages}
+                />
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </>
+  );
+};
